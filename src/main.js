@@ -1,5 +1,11 @@
 import "./style.css";
 import { gameConfig } from "./game-config.js";
+import img01 from "../img/01.jpg";
+import img02 from "../img/02.jpg";
+import img03 from "../img/03.jpg";
+import img04 from "../img/04.jpg";
+import img05 from "../img/05.jpg";
+import img06 from "../img/06.jpg";
 
 /**
  * Quanti stage con almeno un errore si possono “perdonare”
@@ -9,6 +15,35 @@ import { gameConfig } from "./game-config.js";
 const MAX_MISTAKES_FOR_SUCCESS = 1;
 
 const app = document.getElementById("app");
+
+/** Header locali in img/ (01–06 = stage; intro usa 01, esito usa 06). Vite li emette in dist/assets. */
+const HEADERS = {
+  intro: { src: img01, alt: "Due professionisti analizzano mercato, target e obiettivi su una dashboard" },
+  outcome: { src: img06, alt: "Magazzino in ordine: assortimenti, scorte e finestre di consegna allineati" },
+  stages: [
+    { src: img01, alt: "Piano commerciale: analizzare mercato, target, concorrenza e obiettivi di vendita" },
+    { src: img02, alt: "Documenti di trasporto: il camion è pronto, manca la carta per partire" },
+    { src: img03, alt: "Modo di trasporto: nave, ferro e gomma dall’Italia verso il cliente estero" },
+    { src: img04, alt: "Pratica doganale: classificazione, origine e dichiarazione al confine" },
+    { src: img05, alt: "Magazzino e tracking: visibilità in tempo reale su lotto e consegne" },
+    { src: img06, alt: "Scorte e consegne: pianificare assortimenti e finestre di carico" },
+  ],
+};
+
+function headerArt(header) {
+  if (!header) return null;
+  return el(
+    "figure",
+    { class: "header-art" },
+    el("img", {
+      src: header.src,
+      alt: header.alt,
+      width: "1200",
+      height: "400",
+      decoding: "async",
+    }),
+  );
+}
 
 const state = {
   screen: "intro",
@@ -100,6 +135,7 @@ function renderIntro() {
   return el(
     "main",
     { class: "panel panel--intro" },
+    headerArt(HEADERS.intro),
     el("p", { class: "kicker" }, gameConfig.subtitle),
     el("h1", null, gameConfig.title),
     el("p", { class: "context" }, gameConfig.intro.context),
@@ -144,6 +180,7 @@ function renderStage() {
   return el(
     "main",
     { class: "panel panel--stage" },
+    headerArt(HEADERS.stages[state.stageIndex]),
     el(
       "header",
       { class: "hud" },
@@ -186,6 +223,7 @@ function renderOutcome() {
   return el(
     "main",
     { class: `panel panel--outcome${ok ? " panel--win" : " panel--fail"}` },
+    headerArt(HEADERS.outcome),
     el("p", { class: "kicker" }, ok ? "Filiera · chiusa" : "Filiera · da rivedere"),
     el("h1", null, outcome.title),
     el("p", { class: "context" }, outcome.message),

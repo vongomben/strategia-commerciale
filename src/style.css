@@ -107,6 +107,19 @@ body {
   box-shadow: 0 18px 40px rgba(15, 39, 68, 0.08);
 }
 
+.header-art {
+  margin: -1.5rem -1.35rem 1.1rem;
+}
+
+.header-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+
 .kicker {
   margin: 0 0 0.4rem;
   color: var(--btn);
@@ -291,5 +304,9 @@ h1 {
 @media (min-width: 640px) {
   .panel {
     padding: 2rem 2rem 1.85rem;
+  }
+
+  .header-art {
+    margin: -2rem -2rem 1.25rem;
   }
 }
