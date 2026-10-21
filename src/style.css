@@ -271,7 +271,7 @@ h1 {
   color: #8a2230;
 }
 
-.locker {
+.punteggio {
   margin: 1.25rem 0 1.4rem;
   padding: 1.1rem 1rem 1.2rem;
   text-align: center;
@@ -280,7 +280,7 @@ h1 {
   border-radius: 14px;
 }
 
-.locker__label {
+.punteggio__label {
   margin: 0 0 0.35rem;
   color: var(--dim);
   font-size: 0.8rem;
@@ -288,13 +288,25 @@ h1 {
   text-transform: uppercase;
 }
 
-.locker__code {
+.punteggio__stelle {
   margin: 0;
-  color: var(--btn);
-  font-size: clamp(2.6rem, 12vw, 4.2rem);
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  font-size: clamp(2.4rem, 11vw, 3.6rem);
+  letter-spacing: 0.08em;
   line-height: 1;
+}
+
+.stella {
+  color: var(--line);
+}
+
+.stella--on {
+  color: var(--btn);
+}
+
+.punteggio__dettaglio {
+  margin: 0.55rem 0 0;
+  color: var(--dim);
+  font-size: 0.9rem;
 }
 
 .panel--fail h1 {

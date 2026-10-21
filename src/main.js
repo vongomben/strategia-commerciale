@@ -1,5 +1,6 @@
 import "./style.css";
 import { gameConfig } from "./game-config.js";
+import { calcolaStelle, stelleElement } from "./stelle.js";
 import img01 from "../img/01.jpg";
 import img02 from "../img/02.jpg";
 import img03 from "../img/03.jpg";
@@ -7,12 +8,11 @@ import img04 from "../img/04.jpg";
 import img05 from "../img/05.jpg";
 import img06 from "../img/06.jpg";
 
-/**
- * Quanti stage con almeno un errore si possono “perdonare”
- * per mostrare esito positivo e il codice locker.
- * Confermare con Davide: 1 = al massimo un stage sbagliato.
- */
+/** Quanti stage con almeno un errore si possono “perdonare” per il messaggio di esito positivo. */
 const MAX_MISTAKES_FOR_SUCCESS = 1;
+
+/** Stage con errori → stelle: 0 → 5, 1 → 4, 2 → 3, 3–4 → 2, 5–6 → 1. Sovrascrivibile da gameConfig.punteggio.soglie. */
+const SOGLIE_STELLE = [0, 1, 2, 4];
 
 const app = document.getElementById("app");
 
@@ -71,9 +71,14 @@ function isPositiveOutcome() {
   return mistakeCount() <= MAX_MISTAKES_FOR_SUCCESS;
 }
 
-function hasRealLocker() {
-  const code = String(gameConfig.lockerCode || "").trim();
-  return code !== "" && code !== "XXXX";
+function stelleFinali() {
+  return calcolaStelle(mistakeCount(), gameConfig.punteggio?.soglie ?? SOGLIE_STELLE);
+}
+
+function dettaglioErrori() {
+  const n = mistakeCount();
+  if (n === 0) return "Nessun errore";
+  return `Errori in ${n} ${n === 1 ? "tappa" : "tappe"} su ${gameConfig.stages.length}`;
 }
 
 function currentStage() {
@@ -218,7 +223,6 @@ function onPick(opt) {
 function renderOutcome() {
   const ok = isPositiveOutcome();
   const outcome = ok ? gameConfig.outcomes.positive : gameConfig.outcomes.negative;
-  const showLocker = ok && hasRealLocker();
 
   return el(
     "main",
@@ -227,14 +231,7 @@ function renderOutcome() {
     el("p", { class: "kicker" }, ok ? "Filiera · chiusa" : "Filiera · da rivedere"),
     el("h1", null, outcome.title),
     el("p", { class: "context" }, outcome.message),
-    showLocker
-      ? el(
-          "div",
-          { class: "locker", "aria-label": `Codice locker ${gameConfig.lockerCode}` },
-          el("p", { class: "locker__label" }, "Codice locker"),
-          el("p", { class: "locker__code" }, gameConfig.lockerCode),
-        )
-      : null,
+    stelleElement(stelleFinali(), dettaglioErrori()),
     el("button", { class: "btn btn--ghost", type: "button", onClick: () => { resetGame(); paint(); } }, "Ricomincia"),
   );
 }

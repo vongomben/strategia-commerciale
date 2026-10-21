@@ -3,13 +3,10 @@
 // Corso: Strategia commerciale — Marketing logistico e pratiche doganali
 // Obiettivo didattico: mostrare come il tecnico superiore collega vendita,
 // logistica, magazzino digitalizzato e dogane in un'unica filiera.
-// NOTA: lockerCode è un placeholder "XXXX", da NON usare in produzione.
-
 export const gameConfig = {
   id: "strategia-commerciale",
   title: "Strategia commerciale e dogane",
   subtitle: "Marketing logistico e pratiche doganali",
-  lockerCode: "XXXX",
   intro: {
     context:
       "Siete nel team commerciale-logistico di una PMI ligure. Un cliente estero ha appena accettato l'ordine: ora bisogna chiudere la filiera, dal piano di vendita alla dogana, prima che la merce si fermi al confine.",
